@@ -1,53 +1,27 @@
-const mongoose = require('mongoose');
+const express = require('express');
 
-mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost:27017/TodoApp', {useNewUrlParser: true});
+const {mongoose} = require('./db/mongoose');
+const {Todo} = require('./models/todo');
+const {User} = require('./models/user');
 
-const todoSchema = new mongoose.Schema({
-    text: {
-        type: String,
-        required: true,
-        minlength: 1,
-        trim: true
-    },
-    completed: {
-        type: Boolean,
-        default: false
-    },
-    completedAt: {
-        type: Number,
-        default: null
-    }
-});
-const Todo = mongoose.model('Todo', todoSchema);
+const app = express();
 
-// let newTodo = new Todo({
-//     text: 'Something to do'
-// });
+app.use(express.urlencoded({extended: true}));
+app.use(express.json());
 
-// newTodo.save().then(doc => {
-//     console.log(JSON.stringify(doc, undefined, 2));
-// }, err => {
-//     console.log('Unable to save todo', err);
-// });
-
-const userSchema = new mongoose.Schema({
-    email: {
-        type: String,
-        required: true,
-        minlength: 1,
-        trim: true
-    }
+app.post('/todos', (req, res) => {
+    let todo = new Todo({
+        text: req.body.text
+    });
+    todo.save().then(doc => {
+        res.send(doc);
+    }, err => {
+        res.status(400).send(err.message);
+    });
 });
 
-const User = mongoose.model('User', userSchema);
 
-let newUser = new User({
-    email: 'john@gmail.com  '
-});
-
-newUser.save().then(doc => {
-    console.log(JSON.stringify(doc, undefined, 2));
-}, err => {
-    console.log('Unable to create user', err);
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+    console.log(`Server started on port ${port}`);
 });
