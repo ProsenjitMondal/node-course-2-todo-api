@@ -3,37 +3,51 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost:27017/TodoApp', {useNewUrlParser: true});
 
-let todoSchema = new mongoose.Schema({
+const todoSchema = new mongoose.Schema({
     text: {
-        type: String
+        type: String,
+        required: true,
+        minlength: 1,
+        trim: true
     },
     completed: {
-        type: Boolean
+        type: Boolean,
+        default: false
     },
     completedAt: {
-        type: Number
+        type: Number,
+        default: null
     }
 });
-let Todo = mongoose.model('Todo', todoSchema);
+const Todo = mongoose.model('Todo', todoSchema);
 
 // let newTodo = new Todo({
-//     text: 'Cook dinner'
+//     text: 'Something to do'
 // });
 
 // newTodo.save().then(doc => {
-//     console.log('Saved todo', doc);
+//     console.log(JSON.stringify(doc, undefined, 2));
 // }, err => {
 //     console.log('Unable to save todo', err);
 // });
 
-let newTodo = new Todo({
-    text: 'Walk the dog',
-    completed: true,
-    completedAt: 12
+const userSchema = new mongoose.Schema({
+    email: {
+        type: String,
+        required: true,
+        minlength: 1,
+        trim: true
+    }
 });
 
-newTodo.save().then(doc => {
-    console.log('Saved todo', doc);
+const User = mongoose.model('User', userSchema);
+
+let newUser = new User({
+    email: 'john@gmail.com  '
+});
+
+newUser.save().then(doc => {
+    console.log(JSON.stringify(doc, undefined, 2));
 }, err => {
-    console.log('Unable to save todo', err);
+    console.log('Unable to create user', err);
 });
