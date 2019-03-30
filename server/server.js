@@ -84,7 +84,7 @@ app.patch('/todos/:id', (req, res) => {
     });
 });
 
-const port = process.env.PORT || 4000;
+let port = process.env.PORT;
 app.listen(port, () => {
     console.log(`Server started on port ${port}`);
 });
