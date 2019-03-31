@@ -15,6 +15,6 @@ if(env === 'production') {
 }
 
 mongoose.Promise = global.Promise;
-mongoose.connect(url, {useNewUrlParser: true});
+mongoose.connect(url, {useNewUrlParser: true, useCreateIndex: true});
 
 module.exports = {mongoose};
