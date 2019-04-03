@@ -11,7 +11,7 @@ if(env === 'production') {
     process.env.PORT = 3000;
 } else if (env === 'test') {
     url = 'mongodb://localhost:27017/TodoAppTest';
-    process.env.PORT = 4000;
+    process.env.PORT = 6000;
 }
 
 mongoose.Promise = global.Promise;
