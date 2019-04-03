@@ -116,6 +116,14 @@ app.post('/users/login', (req, res) => {
 
 });
 
+app.delete('/users/me/token', authenticate, (req, res) => {
+    req.user.removeToken(req.token).then(() => {
+        res.status(200).send('Logged Out');
+    }, () => {
+        res.status(400).send();
+    });
+});
+
 let port = process.env.PORT;
 app.listen(port, () => {
     console.log(`Server started on port ${port}`);

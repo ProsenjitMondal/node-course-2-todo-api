@@ -5,7 +5,7 @@ let authenticate = (req, res, next) => {
 
     User.findByToken(token).then(user => {
         if (!user) {
-            return Promise.reject('Something went wrong!. No user found!');
+            return Promise.reject('Something went wrong!');
         }
         req.user = user;
         req.token = token;
