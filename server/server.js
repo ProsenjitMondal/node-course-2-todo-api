@@ -1,3 +1,5 @@
+require('./config/config');
+
 const _ = require('lodash');
 const express = require('express');
 const {ObjectID} = require('mongodb');
@@ -26,7 +28,7 @@ app.post('/todos', authenticate, (req, res) => {
 
 app.get('/todos', authenticate, (req, res) => {
     Todo.find({_creator: req.user._id}).then(todos => {
-        res.send({todos, code: 200});
+        res.send({todos});
     }, err => {
         res.status(400).send(err);
     });
