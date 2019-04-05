@@ -130,7 +130,7 @@ describe('DELETE /todos/:id', () => {
                     return done(err);
                 }
                 Todo.findById(hexId).then(todo => {
-                    expect(todo).toBeFalsy();
+                    expect(todo).toBeFalsy(); //toNotExist()-->toBeFalsy();
                     done();
                 }).catch(e => {
                     done(e);
@@ -148,7 +148,7 @@ describe('DELETE /todos/:id', () => {
                     return done(err);
                 }
                 Todo.findById(hexId).then(todo => {
-                    expect(todo).toBeTruthy();
+                    expect(todo).toBeTruthy(); //toExist()-->toBeTruthy();
                     done();
                 }).catch(e => {
                     done(e);
@@ -299,7 +299,7 @@ describe('POST /users', () => {
                 }
                 User.findOne({email}).then(user => {
                     expect(user).toBeTruthy();
-                    expect(user.password).not.toBe(password);
+                    expect(user.password).not.toBe(password); //toNotBe()-->not.toBe();
                     done();
                 }).catch(e => {
                     done(e);
@@ -346,7 +346,7 @@ describe('POST /users/login', () => {
                     return done(err);
                 }
                 User.findById(users[1]._id).then(user => {
-                    expect(user.tokens[1]).toMatchObject({
+                    expect(user.toObject().tokens[1]).toMatchObject({ //toInclude()-->toMatchObject(); toObject()->returns raw user data
                         access: 'auth',
                         token: res.headers['x-auth']
                     });
